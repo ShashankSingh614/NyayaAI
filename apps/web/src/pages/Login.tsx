@@ -79,7 +79,7 @@ const Login = () => {
 
           <div className="mt-8">
             <div className="mt-6">
-              <Button
+              {/* <Button
                 onClick={handleGoogleLogin}
                 variant="outline"
                 className="w-full flex items-center justify-center gap-2"
@@ -97,7 +97,7 @@ const Login = () => {
                     Or continue with
                   </span>
                 </div>
-              </div>
+              </div> */}
 
               <form onSubmit={handleSubmit} className="space-y-6 mt-6">
                 <div>

@@ -122,7 +122,7 @@ const Register = () => {
           </div>
 
           <div className="mt-8">
-            <Button
+            {/* <Button
               onClick={handleGoogleRegister}
               variant="outline"
               className="w-full flex items-center justify-center gap-2"
@@ -140,7 +140,7 @@ const Register = () => {
                   Or continue with
                 </span>
               </div>
-            </div>
+            </div> */}
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-6">
               <div>
