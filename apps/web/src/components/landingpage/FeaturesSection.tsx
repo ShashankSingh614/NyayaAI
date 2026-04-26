@@ -14,11 +14,11 @@ const FeaturesSection = () => {
       title: "Multilingual Support",
       description: "Access legal assistance in multiple languages, breaking down communication barriers for diverse users."
     },
-    {
-      icon: <Headphones className="h-10 w-10 text-legal-gold" />,
-      title: "Voice Interaction",
-      description: "Speak your legal questions and receive voiced responses for a natural and accessible experience."
-    },
+    // {
+    //   icon: <Headphones className="h-10 w-10 text-legal-gold" />,
+    //   title: "Voice Interaction",
+    //   description: "Speak your legal questions and receive voiced responses for a natural and accessible experience."
+    // },
     {
       icon: <User className="h-10 w-10 text-legal-gold" />,
       title: "Lawyer Recommendations",
@@ -52,7 +52,7 @@ const FeaturesSection = () => {
           {features.map((feature, index) => (
             <div 
               key={index} 
-              className="bg-legal-light p-6 rounded-xl shadow-soft hover-scale"
+              className="bg-legal-light p-6 rounded-xl shadow-soft hover-scale flex flex-col items-center text-center h-full"
             >
               <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mb-5 shadow-sm">
                 {feature.icon}

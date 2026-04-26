@@ -1,10 +1,28 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export const LawyerSearchHeader: React.FC = () => {
+interface LawyerSearchHeaderProps {
+  onSearch?: (query: string) => void;
+}
+
+export const LawyerSearchHeader: React.FC<LawyerSearchHeaderProps> = ({ onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    if (onSearch) {
+      onSearch(searchQuery);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="border-b bg-background">
       <div className="container mx-auto px-4 py-6">
@@ -19,9 +37,12 @@ export const LawyerSearchHeader: React.FC = () => {
               <Input
                 placeholder="Search by name, specialization, or location..."
                 className="pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={handleKeyPress}
               />
             </div>
-            <Button>Search</Button>
+            <Button onClick={handleSearch}>Search</Button>
           </div>
         </div>
       </div>

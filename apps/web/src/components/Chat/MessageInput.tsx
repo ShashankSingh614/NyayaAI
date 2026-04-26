@@ -29,9 +29,9 @@ const MessageInput: React.FC<MessageInputProps> = ({
     <footer className="border-t w-full bg-background">
       <div className="px-4 py-4">
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="rounded-full">
+          {/* <Button variant="ghost" size="icon" className="rounded-full">
             <Paperclip className="h-5 w-5 text-muted-foreground" />
-          </Button>
+          </Button> */}
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -60,7 +60,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
               onClick={onOpenApiKeyDialog}
               className="text-sm text-muted-foreground"
             >
-              Set up Gemini API Key
+              Set up API Key
             </Button>
           </div>
         )}
