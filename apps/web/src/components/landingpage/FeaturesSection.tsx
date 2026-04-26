@@ -26,7 +26,7 @@ const FeaturesSection = () => {
     },
     {
       icon: <Share className="h-10 w-10 text-legal-gold" />,
-      title: "Case Sharing",
+      title: "Document Summarization",
       description: "Legal professionals can share anonymized cases and insights to foster a collaborative community."
     },
     {

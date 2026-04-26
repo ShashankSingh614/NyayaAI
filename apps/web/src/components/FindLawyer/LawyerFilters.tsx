@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Filter, MapPin, Star, DollarSign } from "lucide-react";
+import { Filter, MapPin, Star, IndianRupee } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -66,8 +66,9 @@ export const LawyerFilters: React.FC<LawyerFiltersProps> = ({
   };
 
   const handleLocationChange = (location: string) => {
-    setSelectedLocation(location);
-    onFilterChange({ ...filters, locations: location ? [location] : [] });
+    const resolved = location === "all" ? "" : location;
+    setSelectedLocation(resolved);
+    onFilterChange({ ...filters, locations: resolved ? [resolved] : [] });
   };
 
   const handleRatingChange = (value: number[]) => {
@@ -111,12 +112,12 @@ export const LawyerFilters: React.FC<LawyerFiltersProps> = ({
             Location
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <Select value={selectedLocation} onValueChange={handleLocationChange}>
+            <Select value={selectedLocation || "all"} onValueChange={handleLocationChange}>
               <SelectTrigger>
                 <SelectValue placeholder="Select city" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Cities</SelectItem>
+                <SelectItem value="all">All Cities</SelectItem>
                 {indianCities.map((city) => (
                   <SelectItem key={city} value={city}>
                     {city}
@@ -175,7 +176,7 @@ export const LawyerFilters: React.FC<LawyerFiltersProps> = ({
         {/* Price */}
         <SidebarGroup>
           <SidebarGroupLabel className="flex items-center gap-2 mb-3">
-            <DollarSign className="h-4 w-4" />
+            <IndianRupee className="h-4 w-4" />
             Max Hourly Rate
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -196,7 +197,7 @@ export const LawyerFilters: React.FC<LawyerFiltersProps> = ({
 
         {/* Buttons */}
         <SidebarGroup className="space-y-2">
-          <Button className="w-full">Apply Filters</Button>
+          {/* <Button className="w-full">Apply Filters</Button> */}
           <Button variant="outline" className="w-full" onClick={handleResetFilters}>
             Clear All
           </Button>
