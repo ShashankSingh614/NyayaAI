@@ -1,4 +1,4 @@
-# Legal Voice Nexus
+# Nyaya: A Multilingual AI Framework for Scalable Legal Assistance, Professional Collaboration, and Document Intelligence
 
 A comprehensive legal technology platform combining React frontend, Express backend with MongoDB, and AI-powered document processing.
 

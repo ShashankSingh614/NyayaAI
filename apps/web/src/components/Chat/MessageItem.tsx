@@ -49,16 +49,6 @@ const MessageItem: React.FC<MessageItemProps> = ({ message, isLoading }) => {
               Section {message.sectionNumber}
             </Badge>
           )}
-          {message.title && (
-            <Badge variant="secondary" className="text-xs max-w-[200px] truncate">
-              {message.title}
-            </Badge>
-          )}
-          {message.similarity !== undefined && (
-            <Badge variant="outline" className="text-xs">
-              Match: {(message.similarity * 100).toFixed(0)}%
-            </Badge>
-          )}
         </div>
       )}
       

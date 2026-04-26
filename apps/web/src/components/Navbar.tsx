@@ -70,7 +70,7 @@ const Navbar = () => {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer" onClick={() => navigate('/chat')}>
-                    My Legal AI
+                    Legal Assistance
                   </DropdownMenuItem>
                   {user.role === 'lawyer' && (
                     <DropdownMenuItem className="cursor-default text-legal-gold">
@@ -147,7 +147,7 @@ const Navbar = () => {
                   )}
                 </div>
                 <Link to="/chat" onClick={toggleMenu} className="block py-2 px-2 text-legal-dark hover:text-legal-gold">
-                  My Legal AI
+                  Legal Assistance
                 </Link>
                 <Button 
                   onClick={() => { handleLogout(); toggleMenu(); }} 
