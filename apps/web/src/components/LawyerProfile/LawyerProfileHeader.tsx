@@ -53,7 +53,7 @@ export const LawyerProfileHeader: React.FC<LawyerProfileHeaderProps> = ({ lawyer
                   {lawyer.availability}
                 </Badge>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-gray-900">${lawyer.hourlyRate}/hr</div>
+                  <div className="text-2xl font-bold text-gray-900">₹{lawyer.hourlyRate}/hr</div>
                   <div className="text-sm text-gray-600">{lawyer.experience} years experience</div>
                 </div>
               </div>
