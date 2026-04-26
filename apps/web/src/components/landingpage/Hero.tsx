@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import { BookOpen, Users } from "lucide-react";
+import { Users, Scale } from "lucide-react";
 
 export function Hero() {
   const navigate = useNavigate();
@@ -18,18 +18,17 @@ export function Hero() {
       </div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <Link
+          {/* <Link
             to="/"
             className="bg-slate-100 border bg-opacity-20 border-slate-400 rounded-full px-3 flex w-max py-1 gap-2 text-slate-700 hover:bg-opacity-40 duration-100 mx-auto"
             rel="noopener noreferrer"
           >
             Try out Naaya.AI 🚀
-          </Link>
+          </Link> */}
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Master Legal Knowledge & Connect with Expert Lawyers
-          </h1>
+            Instant Legal Assistance & Connect with Verified Lawyers          </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">
-            Experience the future of legal learning with our AI-powered
+            Experience the future of legal assistance with our AI-powered
             platform. Get personalized guidance, connect with experienced
             lawyers, and build your legal expertise efficiently.
           </p>
@@ -39,8 +38,8 @@ export function Hero() {
               className="group"
               onClick={() => navigate("/chat")}
             >
-              <BookOpen className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              Start Learning
+              <Scale className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+              Legal Assistant
             </Button>
             <Button
               variant="ghost"

@@ -1,6 +1,5 @@
-
-import React from "react";
-import { Filter, MapPin, Star, DollarSign, Calendar } from "lucide-react";
+import React, { useState } from "react";
+import { Filter, MapPin, Star, DollarSign } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +12,14 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { FilterState } from "@/pages/FindLawyer";
 
 const specializations = [
   "Criminal Law",
@@ -21,23 +27,71 @@ const specializations = [
   "Corporate Law",
   "Personal Injury",
   "Real Estate",
-  "Immigration",
+  "Immigration Law",
   "Tax Law",
   "Employment Law",
 ];
 
-const locations = [
-  "New York, NY",
-  "Los Angeles, CA",
-  "Chicago, IL",
-  "Houston, TX",
-  "Phoenix, AZ",
-  "Philadelphia, PA",
+const indianCities = [
+  "New Delhi",
+  "Mumbai",
+  "Bangalore",
+  "Ahmedabad",
+  "Chandigarh",
+  "Pune",
+  "Kolkata",
+  "Chennai",
 ];
 
-export const LawyerFilters: React.FC = () => {
-  const [priceRange, setPriceRange] = React.useState([100]);
-  const [rating, setRating] = React.useState([4]);
+interface LawyerFiltersProps {
+  filters: FilterState;
+  onFilterChange: (filters: FilterState) => void;
+}
+
+export const LawyerFilters: React.FC<LawyerFiltersProps> = ({
+  filters,
+  onFilterChange,
+}) => {
+  const [priceRange, setPriceRange] = useState([filters.maxRate]);
+  const [rating, setRating] = useState([filters.minRating]);
+  const [selectedLocation, setSelectedLocation] = useState(
+    filters.locations[0] || ""
+  );
+
+  const handleSpecializationChange = (spec: string, checked: boolean) => {
+    const newSpecs = checked
+      ? [...filters.specializations, spec]
+      : filters.specializations.filter((s) => s !== spec);
+    onFilterChange({ ...filters, specializations: newSpecs });
+  };
+
+  const handleLocationChange = (location: string) => {
+    setSelectedLocation(location);
+    onFilterChange({ ...filters, locations: location ? [location] : [] });
+  };
+
+  const handleRatingChange = (value: number[]) => {
+    setRating(value);
+    onFilterChange({ ...filters, minRating: value[0] });
+  };
+
+  const handlePriceChange = (value: number[]) => {
+    setPriceRange(value);
+    onFilterChange({ ...filters, maxRate: value[0] });
+  };
+
+  const handleResetFilters = () => {
+    setSelectedLocation("");
+    setRating([1]);
+    setPriceRange([5000]);
+    onFilterChange({
+      searchQuery: filters.searchQuery,
+      specializations: [],
+      locations: [],
+      minRating: 1,
+      maxRate: 5000,
+    });
+  };
 
   return (
     <Sidebar className="w-80" collapsible="icon">
@@ -48,22 +102,24 @@ export const LawyerFilters: React.FC = () => {
           <SidebarTrigger className="ml-auto" />
         </div>
       </SidebarHeader>
-      
-      <SidebarContent className="p-4">
+
+      <SidebarContent className="p-4 space-y-6">
+        {/* Location */}
         <SidebarGroup>
-          <SidebarGroupLabel className="flex items-center gap-2">
+          <SidebarGroupLabel className="flex items-center gap-2 mb-3">
             <MapPin className="h-4 w-4" />
             Location
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <Select>
+            <Select value={selectedLocation} onValueChange={handleLocationChange}>
               <SelectTrigger>
-                <SelectValue placeholder="Select location" />
+                <SelectValue placeholder="Select city" />
               </SelectTrigger>
               <SelectContent>
-                {locations.map((location) => (
-                  <SelectItem key={location} value={location}>
-                    {location}
+                <SelectItem value="">All Cities</SelectItem>
+                {indianCities.map((city) => (
+                  <SelectItem key={city} value={city}>
+                    {city}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -71,13 +127,22 @@ export const LawyerFilters: React.FC = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
+        {/* Specialization */}
         <SidebarGroup>
-          <SidebarGroupLabel>Specialization</SidebarGroupLabel>
+          <SidebarGroupLabel className="mb-3">
+            Specialization
+          </SidebarGroupLabel>
           <SidebarGroupContent className="space-y-3">
             {specializations.map((spec) => (
               <div key={spec} className="flex items-center space-x-2">
-                <Checkbox id={spec} />
-                <label htmlFor={spec} className="text-sm font-medium leading-none">
+                <Checkbox
+                  id={spec}
+                  checked={filters.specializations.includes(spec)}
+                  onCheckedChange={(checked) =>
+                    handleSpecializationChange(spec, checked as boolean)
+                  }
+                />
+                <label htmlFor={spec} className="text-sm cursor-pointer">
                   {spec}
                 </label>
               </div>
@@ -85,85 +150,57 @@ export const LawyerFilters: React.FC = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
+        {/* Rating */}
         <SidebarGroup>
-          <SidebarGroupLabel className="flex items-center gap-2">
+          <SidebarGroupLabel className="flex items-center gap-2 mb-3">
             <Star className="h-4 w-4" />
             Minimum Rating
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <div className="px-2">
-              <Slider
-                value={rating}
-                onValueChange={setRating}
-                max={5}
-                min={1}
-                step={0.5}
-                className="w-full"
-              />
-              <div className="flex justify-between text-sm text-gray-500 mt-1">
-                <span>1</span>
-                <span className="font-medium">{rating[0]} stars</span>
-                <span>5</span>
-              </div>
+            <Slider
+              value={rating}
+              onValueChange={handleRatingChange}
+              max={5}
+              min={1}
+              step={0.5}
+            />
+            <div className="flex justify-between text-sm mt-2">
+              <span>1★</span>
+              <span>{rating[0]}★</span>
+              <span>5★</span>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>
 
+        {/* Price */}
         <SidebarGroup>
-          <SidebarGroupLabel className="flex items-center gap-2">
+          <SidebarGroupLabel className="flex items-center gap-2 mb-3">
             <DollarSign className="h-4 w-4" />
-            Hourly Rate (max)
+            Max Hourly Rate
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <div className="px-2">
-              <Slider
-                value={priceRange}
-                onValueChange={setPriceRange}
-                max={1000}
-                min={50}
-                step={25}
-                className="w-full"
-              />
-              <div className="flex justify-between text-sm text-gray-500 mt-1">
-                <span>$50</span>
-                <span className="font-medium">${priceRange[0]}/hr</span>
-                <span>$1000+</span>
-              </div>
+            <Slider
+              value={priceRange}
+              onValueChange={handlePriceChange}
+              max={5000}
+              min={500}
+              step={100}
+            />
+            <div className="flex justify-between text-sm mt-2">
+              <span>₹500</span>
+              <span>₹{priceRange[0]}</span>
+              <span>₹5000</span>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupLabel className="flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
-            Availability
-          </SidebarGroupLabel>
-          <SidebarGroupContent className="space-y-3">
-            <div className="flex items-center space-x-2">
-              <Checkbox id="available-today" />
-              <label htmlFor="available-today" className="text-sm font-medium leading-none">
-                Available Today
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="available-week" />
-              <label htmlFor="available-week" className="text-sm font-medium leading-none">
-                Available This Week
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="free-consultation" />
-              <label htmlFor="free-consultation" className="text-sm font-medium leading-none">
-                Free Consultation
-              </label>
-            </div>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <div className="pt-4 space-y-2">
+        {/* Buttons */}
+        <SidebarGroup className="space-y-2">
           <Button className="w-full">Apply Filters</Button>
-          <Button variant="outline" className="w-full">Clear All</Button>
-        </div>
+          <Button variant="outline" className="w-full" onClick={handleResetFilters}>
+            Clear All
+          </Button>
+        </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );

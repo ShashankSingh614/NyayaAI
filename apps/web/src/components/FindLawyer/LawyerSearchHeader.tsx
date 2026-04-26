@@ -11,6 +11,14 @@ interface LawyerSearchHeaderProps {
 export const LawyerSearchHeader: React.FC<LawyerSearchHeaderProps> = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
+  const handleInputChange = (value: string) => {
+    setSearchQuery(value);
+    // Filter in real-time as user types
+    if (onSearch) {
+      onSearch(value);
+    }
+  };
+
   const handleSearch = () => {
     if (onSearch) {
       onSearch(searchQuery);
@@ -38,7 +46,7 @@ export const LawyerSearchHeader: React.FC<LawyerSearchHeaderProps> = ({ onSearch
                 placeholder="Search by name, specialization, or location..."
                 className="pl-10"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleInputChange(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
             </div>

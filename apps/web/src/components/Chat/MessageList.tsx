@@ -2,8 +2,16 @@
 import React, { useRef, useEffect } from "react";
 import MessageItem from "./MessageItem";
 
+interface ChatMessage {
+  text: string;
+  isUser: boolean;
+  sectionNumber?: number;
+  title?: string;
+  similarity?: number;
+}
+
 interface MessageListProps {
-  messages: { text: string; isUser: boolean }[];
+  messages: ChatMessage[];
   isLoading: boolean;
 }
 

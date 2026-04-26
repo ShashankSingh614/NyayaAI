@@ -4,9 +4,18 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { LawyerList } from "./LawyerList";
+import { Badge } from "@/components/ui/badge";
+
+interface ChatMessage {
+  text: string;
+  isUser: boolean;
+  sectionNumber?: number;
+  title?: string;
+  similarity?: number;
+}
 
 interface MessageItemProps {
-  message: { text: string; isUser: boolean };
+  message: ChatMessage;
   isLoading?: boolean;
 }
 
@@ -32,13 +41,37 @@ const MessageItem: React.FC<MessageItemProps> = ({ message, isLoading }) => {
           : "bg-muted"
       )}
     >
-      {message.text}
+      {/* Display metadata for AI responses */}
+      {!message.isUser && (message.sectionNumber || message.title) && (
+        <div className="mb-3 flex flex-wrap gap-2">
+          {message.sectionNumber && (
+            <Badge variant="outline" className="text-xs">
+              Section {message.sectionNumber}
+            </Badge>
+          )}
+          {message.title && (
+            <Badge variant="secondary" className="text-xs max-w-[200px] truncate">
+              {message.title}
+            </Badge>
+          )}
+          {message.similarity !== undefined && (
+            <Badge variant="outline" className="text-xs">
+              Match: {(message.similarity * 100).toFixed(0)}%
+            </Badge>
+          )}
+        </div>
+      )}
+      
+      {/* Message text */}
+      <p className="whitespace-pre-wrap break-words">{message.text}</p>
+      
+      {/* Connect with Lawyers button for AI responses */}
       {!message.isUser && (
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
           <DrawerTrigger asChild>
             <Button
               variant="outline"
-              className="mt-2 w-full"
+              className="mt-3 w-full"
               onClick={() => setIsDrawerOpen(true)}
             >
               Connect with Lawyers

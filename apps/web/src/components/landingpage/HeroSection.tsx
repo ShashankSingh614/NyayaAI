@@ -10,13 +10,13 @@ const HeroSection = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 md:pr-10">
             <div className="relative w-max rounded-full bg-gradient-to-r from-legal-blue to-legal-gold p-[2px]">
-              <Link
+              {/* <Link
                 to="/"
                 className="bg-white rounded-full px-3 py-1 gap-2 text-slate-700 flex items-center w-max hover:bg-slate-100 transition-colors duration-150"
                 rel="noopener noreferrer"
               >
                 Try out Naaya.AI 🚀
-              </Link>
+              </Link> */}
             </div>
 
             {/* <div className="relative w-max group">
@@ -40,7 +40,7 @@ const HeroSection = () => {
               recommendations in multiple languages using voice or text.
             </p>
 
-            <div className="flex flex-wrap gap-4 pt-4">
+            {/* <div className="flex flex-wrap gap-4 pt-4">
               <Button className="bg-legal-blue hover:bg-opacity-90 text-white px-8 py-6 text-lg">
                 Try Now
               </Button>
@@ -50,9 +50,9 @@ const HeroSection = () => {
               >
                 Learn More
               </Button>
-            </div>
+            </div> */}
 
-            <div className="flex flex-wrap gap-6 pt-6">
+            {/* <div className="flex flex-wrap gap-6 pt-6">
               <div className="flex items-center gap-2">
                 <MessageCircle className="h-5 w-5 text-legal-gold" />
                 <span className="text-legal-dark">AI Chatbot</span>
@@ -65,7 +65,7 @@ const HeroSection = () => {
                 <Headphones className="h-5 w-5 text-legal-gold" />
                 <span className="text-legal-dark">Voice Enabled</span>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="relative">
