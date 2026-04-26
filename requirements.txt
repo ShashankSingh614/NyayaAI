@@ -1,0 +1,46 @@
+# ============================================
+# Legal Voice Nexus - All Dependencies
+# ============================================
+
+# Install Python dependencies:
+# python -m pip install -r requirements.txt
+
+# ============================================
+# AI Module Dependencies (apps/ai/)
+# ============================================
+
+# Core AI & ML
+groq==0.11.0
+httpx==0.27.0
+flask==3.0.0
+python-dotenv==1.0.0
+
+# Machine Learning & NLP
+sentence-transformers==3.4.1
+scikit-learn==1.6.1
+numpy==2.1.2
+pandas==2.2.3
+tqdm==4.67.0
+
+# Document Processing
+pillow==11.0.0
+pdfplumber==0.11.0
+PyPDF2==3.0.1
+pymupdf==1.24.10
+pytesseract==0.3.10
+
+# API & Networking
+requests==2.32.3
+
+# Utilities
+python-dateutil==2.9.0.post0
+pytz==2024.2
+deep-translator==1.11.4
+openpyxl==3.1.5
+
+# ============================================
+# Development Tools
+# ============================================
+black==23.12.0
+flake8==6.1.0
+pytest==7.4.3
