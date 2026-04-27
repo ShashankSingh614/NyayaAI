@@ -69,7 +69,7 @@ const Register = () => {
       if (userType === 'lawyer') {
         payload.bar_id = barId;        payload.specializations = specializations;      }
 
-      const { data } = await axios.post("http://localhost:5000/api/auth/register", payload);
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, payload);
 
       login(data);
 
