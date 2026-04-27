@@ -34,7 +34,11 @@ const Login = () => {
         description: `Welcome back, ${data.name}!`,
       });
 
-      navigate("/"); // Redirect to home on success
+      if (data.role === 'lawyer') {
+        navigate('/lawyer-dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (error: any) {
       toast({
         title: "Login Failed",

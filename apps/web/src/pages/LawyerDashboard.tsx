@@ -70,13 +70,13 @@ const LawyerDashboard: React.FC = () => {
       icon: <FileText className="w-8 h-8" />,
       color: 'bg-green-50',
     },
-    {
-      id: 'chatbot',
-      title: t('lawyerDashboard.chatbot'),
-      description: 'AI-powered chatbot for client consultations',
-      icon: <MessageSquare className="w-8 h-8" />,
-      color: 'bg-purple-50',
-    },
+    // {
+    //   id: 'chatbot',
+    //   title: t('lawyerDashboard.chatbot'),
+    //   description: 'AI-powered chatbot for client consultations',
+    //   icon: <MessageSquare className="w-8 h-8" />,
+    //   color: 'bg-purple-50',
+    // },
   ];
 
   const handleFeatureClick = (featureId: string) => {
@@ -134,9 +134,9 @@ const LawyerDashboard: React.FC = () => {
           <div className="flex-1 overflow-auto bg-gray-50">
             <div className="container mx-auto px-6 py-8">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
+                <TabsList className="grid w-full grid-cols-1">
                   <TabsTrigger value="overview">{t('common.home')}</TabsTrigger>
-                  <TabsTrigger value="settings">Settings</TabsTrigger>
+                  {/* <TabsTrigger value="settings">Settings</TabsTrigger> */}
                 </TabsList>
 
                 {/* Overview Tab */}
@@ -181,7 +181,7 @@ const LawyerDashboard: React.FC = () => {
                   </div>
                 </TabsContent>
 
-                {/* Settings Tab */}
+                {/* Settings Tab
                 <TabsContent value="settings" className="space-y-6 mt-6">
                   <Card>
                     <CardHeader>
@@ -213,7 +213,7 @@ const LawyerDashboard: React.FC = () => {
                       </Button>
                     </CardContent>
                   </Card>
-                </TabsContent>
+                </TabsContent> */}
               </Tabs>
             </div>
           </div>
