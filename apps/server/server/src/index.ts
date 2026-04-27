@@ -13,7 +13,18 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:8080',  // Local development
+    'http://localhost:8081',  // Current frontend port
+    'http://localhost:8082',
+    'http://localhost:8083',  // Future ports
+    'https://nyayaai-1.onrender.com',  // Your new hosted frontend domain
+    'https://nyayaai-o5mh.onrender.com',  // Old hosted domain (keep for compatibility)
+    'https://your-frontend-domain.com'  // Replace with your actual frontend domain
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes
