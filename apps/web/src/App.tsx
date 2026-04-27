@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import FindLawyer from "./pages/FindLawyer";
 import LawyerProfile from "./pages/LawyerProfile";
+import LawyerDashboard from "./pages/LawyerDashboard";
 import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/find-lawyer" element={<FindLawyer />} />
             <Route path="/lawyers" element={<FindLawyer />} />
             <Route path="/lawyer/:id" element={<LawyerProfile />} />
+            <Route path="/lawyer-dashboard" element={<LawyerDashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

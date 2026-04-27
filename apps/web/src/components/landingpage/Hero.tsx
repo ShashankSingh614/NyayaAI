@@ -2,9 +2,11 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Users, Scale } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 export function Hero() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="relative bg-white pt-40 pb-16 sm:pt-32 sm:pb-24">
@@ -26,11 +28,10 @@ export function Hero() {
             Try out Naaya.AI 🚀
           </Link> */}
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Instant Legal Assistance & Connect with Verified Lawyers          </h1>
+            {t('landing.heroTitle')}
+          </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">
-            Experience the future of legal assistance with our AI-powered
-            platform. Get personalized guidance, connect with experienced
-            lawyers, and build your legal expertise efficiently.
+            {t('landing.heroDescription')}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Button
@@ -39,7 +40,7 @@ export function Hero() {
               onClick={() => navigate("/chat")}
             >
               <Scale className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              Legal Assistant
+              {t('landing.feature1Title')}
             </Button>
             <Button
               variant="ghost"
@@ -48,7 +49,7 @@ export function Hero() {
               onClick={() => navigate("/lawyers")}
             >
               <Users className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              Find a Lawyer
+              {t('common.findLawyer')}
             </Button>
           </div>
         </div>

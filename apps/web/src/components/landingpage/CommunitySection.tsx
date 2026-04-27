@@ -1,17 +1,19 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MessageCircle, ThumbsUp, Share } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 const CommunitySection = () => {
+  const { t } = useTranslation();
+
   const posts = [
     {
       id: 1,
       author: "Sarah Johnson",
       authorRole: "IP Attorney",
       avatar: "SJ",
-      content: "Just published my analysis on recent copyright infringement cases in the digital art space. The boundaries between inspiration and infringement continue to blur.",
+      content: t('community.post1Content'),
       likes: 42,
       comments: 8,
       shares: 15
@@ -21,7 +23,7 @@ const CommunitySection = () => {
       author: "Michael Chen",
       authorRole: "Corporate Lawyer",
       avatar: "MC",
-      content: "Interesting developments in B-corp legislation across different states. The shift towards socially responsible business models is gaining legal recognition.",
+      content: t('community.post2Content'),
       likes: 37,
       comments: 6,
       shares: 12
@@ -31,7 +33,7 @@ const CommunitySection = () => {
       author: "Elena Rodriguez",
       authorRole: "Human Rights Advocate",
       avatar: "ER",
-      content: "New precedent set in immigration case law with the recent Supreme Court ruling. This could significantly impact how asylum cases are processed.",
+      content: t('community.post3Content'),
       likes: 56,
       comments: 14,
       shares: 23
@@ -43,10 +45,10 @@ const CommunitySection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Join Our <span className="gradient-text">Legal Community</span>
+            {t('community.joinOur')} <span className="gradient-text">{t('landing.community')}</span>
           </h2>
           <p className="text-legal-gray text-lg">
-            Connect with legal professionals, share insights, and stay updated on the latest developments in the legal world.
+            {t('landing.joinCommunity')}
           </p>
         </div>
 

@@ -2,6 +2,8 @@
 import React, { createContext, useState, useContext } from "react";
 import { sendMessageToHuggingFace } from "@/utils/huggingfaceApi";
 import { useToast } from "@/components/ui/use-toast";
+import { findRecommendedLawyers } from "@/utils/lawyerMatchingEngine";
+import { Lawyer } from "@/data/lawyers";
 
 interface ChatMessage {
   text: string;
@@ -9,6 +11,7 @@ interface ChatMessage {
   sectionNumber?: number;
   title?: string;
   similarity?: number;
+  recommendedLawyers?: Lawyer[];
 }
 
 interface ChatContextType {
@@ -37,7 +40,10 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Extract the AI-generated explanation
         const responseText = response.explanation || "No explanation available";
         
-        // Add AI response with metadata
+        // Find recommended lawyers based on the query
+        const recommendedLawyers = findRecommendedLawyers(query);
+        
+        // Add AI response with metadata and recommendations
         setMessages((prev) => [
           ...prev,
           { 
@@ -45,7 +51,8 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             isUser: false,
             sectionNumber: response.section_number,
             title: response.title,
-            similarity: response.similarity_score
+            similarity: response.similarity_score,
+            recommendedLawyers: recommendedLawyers.length > 0 ? recommendedLawyers.map(m => m.lawyer) : undefined
           },
         ]);
       } else if (response.status === "no_match") {

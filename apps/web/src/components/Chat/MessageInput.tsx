@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { Button } from "@/components/ui/button";
 import { Paperclip, Send } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,6 +14,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   onSendMessage,
   isLoading,
 }) => {
+  const { t } = useTranslation();
   const [input, setInput] = useState("");
 
   const handleSend = () => {
@@ -34,7 +36,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 handleSend();
               }
             }}
-            placeholder="Type a message..."
+            placeholder={t('chat.placeholder')}
             className="flex-1 rounded-md resize-none min-h-[40px] max-h-[120px] py-2"
             rows={1}
             disabled={isLoading}
@@ -43,6 +45,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
             className="rounded-full p-2 aspect-square"
+            title={t('chat.send')}
           >
             <Send className="h-5 w-5" />
           </Button>

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+import { useTranslation } from 'react-i18next';
 import { Upload, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -13,13 +14,33 @@ import {
 } from "@/components/ui/select";
 
 export const DocumentSummarySection: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [summary, setSummary] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState(i18n.language || "en");
   const [pages, setPages] = useState<number | null>(null);
   const { toast } = useToast();
+
+  // Map i18n language codes to API language codes
+  const languageMap: Record<string, string> = {
+    en: "English",
+    hi: "Hindi",
+    ta: "Tamil",
+    te: "Telugu",
+    kn: "Kannada",
+    ml: "Malayalam",
+  };
+
+  const languageOptions = useMemo(() => [
+    { value: "en", label: "English", nativeLabel: "English" },
+    { value: "hi", label: "Hindi", nativeLabel: "हिंदी" },
+    { value: "ta", label: "Tamil", nativeLabel: "தமிழ்" },
+    { value: "te", label: "Telugu", nativeLabel: "తెలుగు" },
+    { value: "kn", label: "Kannada", nativeLabel: "ಕನ್ನಡ" },
+    { value: "ml", label: "Malayalam", nativeLabel: "മലയാളം" },
+  ], []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -30,11 +51,11 @@ export const DocumentSummarySection: React.FC = () => {
         setError(null);
         setSummary(null);
       } else {
-        setError("Please select a PDF file");
+        setError(t('documentSummary.invalidFile'));
         setFile(null);
         toast({
-          title: "Invalid File",
-          description: "Please upload a PDF file",
+          title: t('documentSummary.invalidFile'),
+          description: t('documentSummary.invalidFile'),
           variant: "destructive",
           duration: 3000,
         });
@@ -44,7 +65,7 @@ export const DocumentSummarySection: React.FC = () => {
 
   const handleUploadAndSummarize = async () => {
     if (!file) {
-      setError("Please select a file");
+      setError(t('documentSummary.noFile'));
       return;
     }
 
@@ -52,20 +73,22 @@ export const DocumentSummarySection: React.FC = () => {
     setError(null);
 
     try {
-      const result = await summarizeDocument(file, language);
+      // Map to the correct language format for the API
+      const apiLanguage = languageMap[language] || "English";
+      const result = await summarizeDocument(file, apiLanguage);
       setSummary(result.summary);
       setPages(result.pages);
       toast({
-        title: "Success",
-        description: "Document summarized successfully",
+        title: t('common.success'),
+        description: t('documentSummary.summarizing'),
         duration: 3000,
       });
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Failed to summarize document";
+        err instanceof Error ? err.message : t('documentSummary.error');
       setError(errorMessage);
       toast({
-        title: "Error",
+        title: t('common.error'),
         description: errorMessage,
         variant: "destructive",
         duration: 5000,
@@ -82,25 +105,16 @@ export const DocumentSummarySection: React.FC = () => {
     setPages(null);
   };
 
-  const languageOptions = [
-    { value: "en", label: "English" },
-    { value: "hi", label: "Hindi" },
-    { value: "es", label: "Spanish" },
-    { value: "fr", label: "French" },
-    { value: "de", label: "German" },
-    { value: "ja", label: "Japanese" },
-  ];
-
   return (
     <section className="section-padding bg-legal-light">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Document <span className="gradient-text">Summarization</span>
+              {t('documentSummary.title')} <span className="gradient-text">{t('documentSummary.summarization')}</span>
             </h2>
             <p className="text-legal-gray text-lg">
-              Upload your legal documents and get instant summaries powered by AI
+              {t('documentSummary.subtitle')}
             </p>
           </div>
 
@@ -119,10 +133,10 @@ export const DocumentSummarySection: React.FC = () => {
                       </div>
                       <div>
                         <p className="text-lg font-semibold text-legal-dark">
-                          {file ? file.name : "Click to upload PDF"}
+                          {file ? file.name : t('documentSummary.uploadFile')}
                         </p>
                         <p className="text-sm text-legal-gray mt-2">
-                          or drag and drop your legal documents here
+                          {t('documentSummary.uploadFile')}
                         </p>
                       </div>
                     </div>
@@ -149,16 +163,16 @@ export const DocumentSummarySection: React.FC = () => {
                   <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-3">
                       <label htmlFor="language-select" className="text-sm font-medium">
-                        Output Language:
+                        {t('documentSummary.selectLanguage')}
                       </label>
                       <Select value={language} onValueChange={setLanguage}>
                         <SelectTrigger className="w-[200px]">
-                          <SelectValue placeholder="Select language" />
+                          <SelectValue placeholder={t('documentSummary.selectLanguage')} />
                         </SelectTrigger>
                         <SelectContent>
                           {languageOptions.map((option) => (
                             <SelectItem key={option.value} value={option.value}>
-                              {option.label}
+                              {option.nativeLabel} ({option.label})
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -178,12 +192,12 @@ export const DocumentSummarySection: React.FC = () => {
                       {isLoading ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Summarizing...
+                          {t('documentSummary.summarizing')}
                         </>
                       ) : (
                         <>
                           <Upload className="mr-2 h-4 w-4" />
-                          Summarize Document
+                          {t('documentSummary.uploadFile')}
                         </>
                       )}
                     </Button>
@@ -192,7 +206,7 @@ export const DocumentSummarySection: React.FC = () => {
                       variant="outline"
                       className="px-8"
                     >
-                      Clear
+                      {t('common.clear')}
                     </Button>
                   </div>
                 )}
@@ -202,20 +216,20 @@ export const DocumentSummarySection: React.FC = () => {
                 {/* Success Message */}
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex gap-3">
                   <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <p className="text-green-700">Document summarized successfully</p>
+                  <p className="text-green-700">{t('documentSummary.summarizing')}</p>
                 </div>
 
                 {/* Document Info */}
                 {pages && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-800">
-                    📄 Document: {pages} page(s) • Language: {languageOptions.find(l => l.value === language)?.label}
+                    📄 {t('common.search')}: {pages} pages • {t('common.language')}: {languageOptions.find(l => l.value === language)?.nativeLabel}
                   </div>
                 )}
 
                 {/* Summary Content */}
                 <div className="bg-white rounded-lg p-6 border border-legal-gold/20">
                   <h3 className="text-xl font-semibold text-legal-dark mb-4">
-                    Summary
+                    {t('documentSummary.summary')}
                   </h3>
                   <p className="text-legal-gray leading-relaxed whitespace-pre-wrap">
                     {summary}
@@ -228,7 +242,7 @@ export const DocumentSummarySection: React.FC = () => {
                     onClick={handleReset}
                     className="bg-legal-gold hover:bg-legal-gold/90 text-white px-8"
                   >
-                    Summarize Another Document
+                    {t('documentSummary.uploadFile')}
                   </Button>
                 </div>
               </div>
@@ -239,7 +253,7 @@ export const DocumentSummarySection: React.FC = () => {
           <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
             <h4 className="font-semibold text-blue-900 mb-2">📄 Supported Formats</h4>
             <p className="text-blue-800 text-sm">
-              Currently supports PDF files. Our AI summarization service extracts key information from your legal documents and presents it in an easy-to-understand format. Available in multiple languages.
+              Currently supports PDF files. Our AI summarization service extracts key information from your legal documents and presents it in an easy-to-understand format. Available in multiple Indian languages including Hindi, Tamil, Telugu, Kannada, and Malayalam.
             </p>
           </div>
         </div>

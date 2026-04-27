@@ -1,38 +1,40 @@
-
 import React from 'react';
 import { MessageCircle, Languages, Headphones, User, Share, ThumbsUp } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 const FeaturesSection = () => {
+  const { t } = useTranslation();
+
   const features = [
     {
       icon: <MessageCircle className="h-10 w-10 text-legal-gold" />,
-      title: "AI Legal Assistant",
-      description: "Get instant answers to your legal questions through our intelligent chatbot trained on legal precedents and regulations."
+      title: t('landing.feature1Title'),
+      description: t('landing.feature1Desc')
     },
     {
       icon: <Languages className="h-10 w-10 text-legal-gold" />,
-      title: "Multilingual Support",
-      description: "Access legal assistance in multiple languages, breaking down communication barriers for diverse users."
+      title: t('features.multilingualTitle'),
+      description: t('features.multilingualDesc')
     },
     // {
     //   icon: <Headphones className="h-10 w-10 text-legal-gold" />,
-    //   title: "Voice Interaction",
-    //   description: "Speak your legal questions and receive voiced responses for a natural and accessible experience."
+    //   title: t('features.voiceTitle'),
+    //   description: t('features.voiceDesc')
     // },
     {
       icon: <User className="h-10 w-10 text-legal-gold" />,
-      title: "Lawyer Recommendations",
-      description: "Receive curated recommendations for legal professionals specialized in your specific needs."
+      title: t('features.lawyerRecommendationsTitle'),
+      description: t('features.lawyerRecommendationsDesc')
     },
     {
       icon: <Share className="h-10 w-10 text-legal-gold" />,
-      title: "Document Summarization",
-      description: "Legal professionals can share anonymized cases and insights to foster a collaborative community."
+      title: t('landing.feature3Title'),
+      description: t('landing.feature3Desc')
     },
     {
       icon: <ThumbsUp className="h-10 w-10 text-legal-gold" />,
-      title: "Community Engagement",
-      description: "Engage with content through comments, likes, and shares to build a vibrant professional network."
+      title: t('features.communityTitle'),
+      description: t('features.communityDesc')
     }
   ];
 
@@ -41,10 +43,10 @@ const FeaturesSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Powerful <span className="gradient-text">Features</span> for Everyone
+            {t('features.heading')} <span className="gradient-text">{t('landing.features')}</span> {t('features.forEveryone')}
           </h2>
           <p className="text-legal-gray text-lg">
-            Our platform bridges the gap between legal assistance seekers and professionals with innovative tools and technologies.
+            {t('features.subtitle')}
           </p>
         </div>
 

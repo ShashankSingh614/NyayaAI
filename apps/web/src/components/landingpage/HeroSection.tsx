@@ -2,8 +2,11 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Headphones, MessageCircle, Languages } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const HeroSection = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-gradient-to-b from-white to-legal-light">
       <div className="container mx-auto px-4 pt-16 pb-20 md:pt-24 md:pb-32">
@@ -31,13 +34,11 @@ const HeroSection = () => {
             </div> */}
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              <span className="gradient-text">Legal Assistance</span> Powered by
-              AI
+              <span className="gradient-text">{t('landing.heroSubtitle')}</span> {t('heroSection.poweredBy')}
             </h1>
 
             <p className="text-lg text-legal-gray md:text-xl mt-4">
-              Get instant legal answers, solutions, and professional
-              recommendations in multiple languages using voice or text.
+              {t('landing.heroDescription')}
             </p>
 
             {/* <div className="flex flex-wrap gap-4 pt-4">
@@ -74,25 +75,21 @@ const HeroSection = () => {
                 <div className="max-w-xs mx-auto p-5">
                   <div className="bg-legal-light p-4 rounded-lg mb-4 shadow-sm">
                     <p className="text-legal-dark">
-                      What are my rights as a tenant if my landlord hasn't fixed
-                      a major plumbing issue?
+                      {t('heroSection.sampleQuestion')}
                     </p>
                   </div>
                   <div className="bg-legal-blue bg-opacity-10 p-4 rounded-lg shadow-sm">
                     <p className="text-sm text-legal-dark">
-                      According to tenant laws in most jurisdictions, landlords
-                      are required to maintain habitable living conditions. For
-                      a major plumbing issue, you typically have the right to:
+                      {t('heroSection.sampleAnswerIntro')}
                     </p>
                     <ul className="list-disc pl-5 mt-2 text-sm text-legal-dark">
-                      <li>Formal written notice to repair</li>
-                      <li>Withhold rent in some cases</li>
-                      <li>Repair and deduct costs</li>
-                      <li>Break lease without penalty</li>
+                      <li>{t('heroSection.sampleAnswer1')}</li>
+                      <li>{t('heroSection.sampleAnswer2')}</li>
+                      <li>{t('heroSection.sampleAnswer3')}</li>
+                      <li>{t('heroSection.sampleAnswer4')}</li>
                     </ul>
                     <p className="text-xs text-legal-gray mt-3 italic">
-                      Would you like me to recommend a tenant rights attorney in
-                      your area?
+                      {t('heroSection.sampleAnswerCta')}
                     </p>
                   </div>
                 </div>

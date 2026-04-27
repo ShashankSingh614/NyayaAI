@@ -1,6 +1,8 @@
 
 import React, { useRef, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import MessageItem from "./MessageItem";
+import { Lawyer } from "@/data/lawyers";
 
 interface ChatMessage {
   text: string;
@@ -8,6 +10,7 @@ interface ChatMessage {
   sectionNumber?: number;
   title?: string;
   similarity?: number;
+  recommendedLawyers?: Lawyer[];
 }
 
 interface MessageListProps {
@@ -16,6 +19,7 @@ interface MessageListProps {
 }
 
 const MessageList: React.FC<MessageListProps> = ({ messages, isLoading }) => {
+  const { t } = useTranslation();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto scroll to bottom when new messages arrive
@@ -36,7 +40,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading }) => {
         {messages.length === 0 && (
           <div className="text-center py-8">
             <p className="text-muted-foreground">
-              Start a conversation with Nyaya.Ai legal assistant
+              {t('chat.noMessages')}
             </p>
           </div>
         )}

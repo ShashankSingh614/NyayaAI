@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, LogOut, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { LanguageSelector } from "./LanguageSelector";
+import { useTranslation } from 'react-i18next';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,6 +18,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -44,20 +47,21 @@ const Navbar = () => {
               href="#features"
               className="text-legal-dark hover:text-legal-gold transition-colors"
             >
-              Features
+              {t('landing.features')}
             </a>
             <a
               href="#benefits"
               className="text-legal-dark hover:text-legal-gold transition-colors"
             >
-              Benefits
+              {t('landing.benefits')}
             </a>
             <a
               href="#community"
               className="text-legal-dark hover:text-legal-gold transition-colors"
             >
-              Community
+              {t('landing.community')}
             </a>
+            <LanguageSelector />
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -67,20 +71,26 @@ const Navbar = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48 bg-white border border-gray-200">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel>{t('navbar.profile')}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer" onClick={() => navigate('/chat')}>
-                    Legal Assistance
-                  </DropdownMenuItem>
-                  {user.role === 'lawyer' && (
-                    <DropdownMenuItem className="cursor-default text-legal-gold">
-                      Status: {user.application_status}
+                  {user.role === 'lawyer' ? (
+                    <>
+                      <DropdownMenuItem className="cursor-pointer" onClick={() => navigate('/lawyer-dashboard')}>
+                        {t('lawyerDashboard.title')}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-default text-legal-gold">
+                        {t('lawyerProfile.availability')}: {user.application_status}
+                      </DropdownMenuItem>
+                    </>
+                  ) : (
+                    <DropdownMenuItem className="cursor-pointer" onClick={() => navigate('/chat')}>
+                      {t('chat.title')}
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50">
                     <LogOut size={16} className="mr-2" />
-                    Sign out
+                    {t('navbar.logout')}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -91,12 +101,12 @@ const Navbar = () => {
                     variant="outline"
                     className="border-legal-blue text-legal-blue hover:bg-legal-blue hover:text-white"
                   >
-                    Login
+                    {t('auth.login')}
                   </Button>
                 </Link>
                 <Link to="/register">
                   <Button className="bg-legal-blue hover:bg-opacity-90 text-white">
-                    Register
+                    {t('auth.register')}
                   </Button>
                 </Link>
               </>
@@ -119,22 +129,26 @@ const Navbar = () => {
               className="block py-2 text-legal-dark hover:text-legal-gold"
               onClick={toggleMenu}
             >
-              Features
+              {t('landing.features')}
             </a>
             <a
               href="#benefits"
               className="block py-2 text-legal-dark hover:text-legal-gold"
               onClick={toggleMenu}
             >
-              Benefits
+              {t('benefits.forAllUsers')}
             </a>
             <a
               href="#community"
               className="block py-2 text-legal-dark hover:text-legal-gold"
               onClick={toggleMenu}
             >
-              Community
+              {t('landing.community')}
             </a>
+            <div className="py-2 border-t border-gray-200 pt-3">
+              <div className="text-sm font-semibold text-legal-dark mb-2 px-2">{t('navbar.selectLanguage')}</div>
+              <LanguageSelector />
+            </div>
             {user ? (
               <div className="pt-4 border-t border-gray-200">
                 <div className="flex items-center px-2 py-2 mb-2 text-legal-blue font-medium">
@@ -146,16 +160,22 @@ const Navbar = () => {
                     </span>
                   )}
                 </div>
-                <Link to="/chat" onClick={toggleMenu} className="block py-2 px-2 text-legal-dark hover:text-legal-gold">
-                  Legal Assistance
-                </Link>
-                <Button 
-                  onClick={() => { handleLogout(); toggleMenu(); }} 
+                {user.role === 'lawyer' ? (
+                  <Link to="/lawyer-dashboard" onClick={toggleMenu} className="block py-2 px-2 text-legal-dark hover:text-legal-gold">
+                    {t('lawyerDashboard.title')}
+                  </Link>
+                ) : (
+                  <Link to="/chat" onClick={toggleMenu} className="block py-2 px-2 text-legal-dark hover:text-legal-gold">
+                    {t('chat.title')}
+                  </Link>
+                )}
+                <Button
+                  onClick={() => { handleLogout(); toggleMenu(); }}
                   className="w-full mt-2 bg-red-50 text-red-600 hover:bg-red-100 border-none justify-start"
                   variant="outline"
                 >
                   <LogOut size={18} className="mr-2" />
-                  Sign out
+                  {t('navbar.logout')}
                 </Button>
               </div>
             ) : (
@@ -166,7 +186,7 @@ const Navbar = () => {
                     className="w-full border-legal-blue text-legal-blue hover:bg-legal-blue hover:text-white"
                     onClick={toggleMenu}
                   >
-                    Login
+                    {t('auth.login')}
                   </Button>
                 </Link>
                 <Link to="/register">
@@ -174,7 +194,7 @@ const Navbar = () => {
                     className="w-full bg-legal-blue hover:bg-opacity-90 text-white"
                     onClick={toggleMenu}
                   >
-                    Register
+                    {t('auth.register')}
                   </Button>
                 </Link>
               </div>
