@@ -84,13 +84,13 @@ export const LawyerFilters: React.FC<LawyerFiltersProps> = ({
   const handleResetFilters = () => {
     setSelectedLocation("");
     setRating([1]);
-    setPriceRange([5000]);
+    setPriceRange([10000]);
     onFilterChange({
       searchQuery: filters.searchQuery,
       specializations: [],
       locations: [],
       minRating: 1,
-      maxRate: 5000,
+      maxRate: 10000,
     });
   };
 
@@ -183,14 +183,14 @@ export const LawyerFilters: React.FC<LawyerFiltersProps> = ({
             <Slider
               value={priceRange}
               onValueChange={handlePriceChange}
-              max={5000}
+              max={10000}
               min={500}
               step={100}
             />
             <div className="flex justify-between text-sm mt-2">
               <span>₹500</span>
               <span>₹{priceRange[0]}</span>
-              <span>₹5000</span>
+              <span>₹10000</span>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>

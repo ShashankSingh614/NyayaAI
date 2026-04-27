@@ -27,7 +27,7 @@ const FindLawyer = () => {
     specializations: [],
     locations: [],
     minRating: 1,
-    maxRate: 5000,
+    maxRate: 10000,
   });
 
   const handleSearch = (query: string) => {
