@@ -97,9 +97,6 @@ logs/
 *.db
 *.sqlite
 *.sqlite3
-data/
-!apps/web/src/data/
-!apps/web/src/data/**
 
 # ============================================
 # Cache
