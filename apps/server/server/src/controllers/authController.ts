@@ -38,7 +38,7 @@ export const register = async (req: Request, res: Response) => {
         email: user.email,
         role: user.role,
         application_status: user.application_status,
-        token: generateToken(user._id as string),
+        token: generateToken(user._id.toString()),
       });
     }
 
@@ -54,7 +54,7 @@ export const register = async (req: Request, res: Response) => {
       name: user.name,
       email: user.email,
       role: user.role,
-      token: generateToken(user._id as string),
+      token: generateToken(user._id.toString()),
     });
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
@@ -74,7 +74,7 @@ export const login = async (req: Request, res: Response) => {
         email: user.email,
         role: user.role,
         application_status: user.application_status,
-        token: generateToken(user._id as string),
+        token: generateToken(user._id.toString()),
       });
     } else {
       return res.status(401).json({ message: 'Invalid email or password' });
